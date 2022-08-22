@@ -60,16 +60,17 @@ const RANDOM_TABLE = [...UPPER_TABLE, ...NUM_TABLE, ...LOWER_TABLE];
 const RANDOM_SIZE = RANDOM_TABLE.length;
 
 const UID_SIZE = 24;
+
 const NFT_ID_SIZE = 30;
 
 const timestamps = new Date();
 
 // 1일단위의 timestamp를 얻기 위한 상수
-//              ms    1초  1분  1일
-const ONE_DAY = 1000 * 60 * 60 * 30;
+//              1초   60초 60분  24시간
+const ONE_DAY = 1000 * 60 * 60 * 24;
 
-// 24자리 랜덤 uid가 겹치는것을 방지하기위해
-// 하루단위의 timestamp를 앞에 추가
+// 과거의 uid가 겹치는것을 방지하기위해 (24자리)
+// 하루단위의 timestamp를 앞에 추가     ( 5자리)
 const toDay = Math.floor(timestamps / ONE_DAY);
 
 // 29자리 랜덤 uid 리턴

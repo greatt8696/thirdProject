@@ -5,7 +5,8 @@ const Sequelize = require("sequelize");
 // require("../config/config") 가져오면 내보낸 객체가 가져와진다.
 const { config } = require("../config/config");
 const User = require("./users");
-const Post = require("./posts");
+const Nft = require("./nfts");
+const Rank = require("./ranks");
 
 console.log(config);
 
@@ -19,14 +20,17 @@ const db = {};
 // User도 내보내서 사용할 예정이라 키값
 db.sequelize = sequelize;
 db.User = User;
-db.Post = Post;
+db.Nft = Nft;
+db.Rank = Rank;
 
 // 이 구문이 없으면 테이블이 생성되지 않는다.
 User.init(sequelize);
-Post.init(sequelize);
+Nft.init(sequelize);
+Rank.init(sequelize);
 
 // 관계형을 맺어주는 함수 사용
 User.associate(db);
-Post.associate(db);
+Nft.associate(db);
+Rank.associate(db);
 
 module.exports = db;
