@@ -4,8 +4,7 @@ const path = require("path");
 // 이렇게 폴더 경로까지만 잡으면 index 탐색 찾은 index파일을 가져옴.
 const { sequelize, User, Post } = require("./model");
 const { fstat } = require("fs");
-const { createUid } = require("./util/createUid");
-
+const { createUid } = require("./util/createRandom");
 
 const app = express();
 
@@ -31,9 +30,19 @@ app.use(express.urlencoded({ extended: false }));
 // // CREATE TABLE 구문이 여기서 실행됨.
 // // force 강제실행 초기화 시킬것인지(테이블 초기화 할것인지)
 sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     console.log("DB연결 성공");
+
+    User.create({
+      uid: createUid(),
+      pwd: "쀼쀼쀼쀼쀼",
+      name: "name",
+      email: "뀨뀨뀨뀨뀨뀨뀨@naver.com",
+      balance: 987654321098765,
+      grade:0,
+      gallery : JSON.stringify([createUid(), createUid(), createUid(), createUid()])
+    });
   })
   .catch((err) => {
     console.log(err);
