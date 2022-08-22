@@ -33,6 +33,7 @@ class User extends Sequelize.Model {
           // 주민번호나 전화번호 겹치지 않는 값들 혹여나 안겹치게
           autoIncrement: true,
         },
+
         uid: {
           // 시퀄라이즈 모델 안에 있는 데이터 타입을 사용해야함 꼭!
           // 그래서 가져온 시퀄라이즈 모듈 안에 있는 STRING 객체를 사용
@@ -52,6 +53,9 @@ class User extends Sequelize.Model {
           type: Sequelize.STRING(255),
           allowNull: false,
         },
+        name: {
+          type: Sequelize.STRING(255),
+        },
 
         email: {
           type: Sequelize.STRING(50),
@@ -66,15 +70,17 @@ class User extends Sequelize.Model {
           // 문자로 받을 거니까 TEXT
           type: Sequelize.TINYINT(),
         },
-        
 
+        gallery: {
+          type: Sequelize.TEXT,
+        },
 
         // 생성한 시간이 필요하다 할때 사용하면 됨 테이블 자체에 timestamps : true 도 쓸수 있음.
-        // created_at: {
-        //   type: Sequelize.DATE,
-        //   allowNull: false,
-        //   defaultValue: Sequelize.NOW,
-        // },
+        created_at: {
+          type: Sequelize.DATE,
+          allowNull: false,
+          defaultValue: Sequelize.NOW,
+        },
       },
       //created_at 만 생기는게 아니라 updated_at 도 생겨서 우리가 수정했을때 시간도 같이 기록해줌
       {
