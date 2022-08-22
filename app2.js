@@ -6,31 +6,23 @@ const { sequelize, User, Post } = require("./model");
 const { fstat } = require("fs");
 const { createUid } = require("./util/createUid");
 
-console.log(createUid());
 
-// const app = express();
+const app = express();
 
-// const PORT = 3000;
+const PORT = 3000;
 
 // // join함수는 매개변수를 받아 주소처럼 합쳐줌
 // // path.join('a','b') => "a/b"
 // // views 폴더까지의 경로가 기본값 렌더링할 파일을 모아둔 폴더
 // // app.set express에 값을 저장가능 밑에 구문은 view키에 주소값을 넣은 부분
-// app.set("views", path.join(__dirname, "view"));
+app.set("views", path.join(__dirname, "view"));
 
-// // 랜더링하는 기본 엔진을 ejs 처럼 사용한다고 알려주는것.
-// // engine("파일타입", ejs 그릴때 방식을) 뷰 엔진이 그릴때
-// // app.get("/", (req, res) => {
-// //   res.send(ejs.render(data, {e}));
-// // });
-// // html의 뷰 엔진을 ejs 랜더링 방식으로 바꾼다.
+app.engine("html", ejs.renderFile);
 
-// app.engine("html", ejs.renderFile);
-
-// app.set("view engine", "html");
+app.set("view engine", "html");
 
 // //body 객체 사용
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 // // sequelize 구성 연결 및 테이블 생성 여기가 처음 매핑
 // // sync 함수는 데이터베이스 동기화하고 필요한 테이블을 생성해준다.
@@ -38,14 +30,14 @@ console.log(createUid());
 // // 테이블 내용이 다르면 먼저 오류를 뱉어냄s
 // // CREATE TABLE 구문이 여기서 실행됨.
 // // force 강제실행 초기화 시킬것인지(테이블 초기화 할것인지)
-// sequelize
-//   .sync({ force: false })
-//   .then(() => {
-//     console.log("DB연결 성공");
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("DB연결 성공");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // app.get("/", (req, res) => {
 //   res.render("create");

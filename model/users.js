@@ -15,31 +15,59 @@ class User extends Sequelize.Model {
     // 두번째 테이블 자체에 대한 설정값을 객체로 전달
     return super.init(
       {
-        uid: {
+        id: {
           // 시퀄라이즈 모델 안에 있는 데이터 타입을 사용해야함 꼭!
           // 그래서 가져온 시퀄라이즈 모듈 안에 있는 STRING 객체를 사용
           // 여기서 한거는 컬럼의 데이터 타입을 정한 것
-          type: Sequelize.CHAR(25),
+          type: Sequelize.INTEGER,
 
           // allowNull 은 값이 무조건 있어야하는지 설정하는것.
           // null 기본값을 허용한다.
           allowNull: false,
 
           //기본키로 설정할 것인지
-          // primaryKey: true,
+          primaryKey: true,
+
+          unique: true,
+          // 중복되지 않는 키
+          // 주민번호나 전화번호 겹치지 않는 값들 혹여나 안겹치게
+          autoIncrement: true,
+        },
+        uid: {
+          // 시퀄라이즈 모델 안에 있는 데이터 타입을 사용해야함 꼭!
+          // 그래서 가져온 시퀄라이즈 모듈 안에 있는 STRING 객체를 사용
+          // 여기서 한거는 컬럼의 데이터 타입을 정한 것
+          type: Sequelize.CHAR(29),
+
+          // allowNull 은 값이 무조건 있어야하는지 설정하는것.
+          // null 기본값을 허용한다.
+          allowNull: false,
 
           unique: true,
           // 중복되지 않는 키
           // 주민번호나 전화번호 겹치지 않는 값들 혹여나 안겹치게
         },
-        age: {
-          type: Sequelize.INTEGER,
+
+        pwd: {
+          type: Sequelize.STRING(255),
           allowNull: false,
         },
-        msg: {
-          // 문자로 받을 거니까 TEXT
-          type: Sequelize.TEXT,
+
+        email: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
         },
+        balance: {
+          type: Sequelize.BIGINT.UNSIGNED,
+          allowNull: false,
+        },
+
+        grade: {
+          // 문자로 받을 거니까 TEXT
+          type: Sequelize.TINYINT(),
+        },
+        
+
 
         // 생성한 시간이 필요하다 할때 사용하면 됨 테이블 자체에 timestamps : true 도 쓸수 있음.
         // created_at: {
@@ -55,7 +83,7 @@ class User extends Sequelize.Model {
         // underscored 시퀄라이즈는 기본적으로 userData 카멜표기법인데
         // 스테이크 표기법으로 바꿔주는 옵션 user_data
 
-        underscored: false, // false : createdAt , true : created_at
+        underscored: true, // false : createdAt , true : created_at
         // 모델의 이름을 설정할 수 있다.
         modelName: "User", // 관계형으로 구성할 때 사용한다.
         tableName: "users", // 데이터베이스의 테이블 이름을 설정한다.
@@ -81,7 +109,7 @@ class User extends Sequelize.Model {
     // 첫번째 매개변수로 연결할 테이블
     //sourceKey User 테이블 안에 무슨 키를 foreignKey와 연결할지
     // hasMany (첫번째로 넘겨준 테이블이 foreignKey 연결되고 )
-    db.User.hasMany(db.Post, { foreignKey: "user_id", sourceKey: "id" });
+    db.User.hasMany(db.Post, { foreignKey: "user_id", sourceKey: "uid" });
   }
 }
 

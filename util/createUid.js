@@ -59,17 +59,29 @@ const RANDOM_TABLE = [...UPPER_TABLE, ...NUM_TABLE, ...LOWER_TABLE];
 
 const RANDOM_SIZE = RANDOM_TABLE.length;
 
-const UID_SIZE = 25;
+const UID_SIZE = 24;
 
-// S7l91TGys8jN4wq7ce8zcZIGF
+const timestamps = new Date();
 
+// 1일단위의 timestamp를 얻기 위한 상수
+//              ms    1초  1분  1일
+const ONE_DAY = 1000 * 60 * 60 * 30; 
+
+// 24자리 랜덤 uid가 겹치는것을 방지하기위해 
+// 하루단위의 timestamp를 앞에 추가 
+const toDay = Math.floor(timestamps / ONE_DAY); 
+
+
+// 29자리 랜덤 uid 리턴
 const createUid = () => {
   const uid = [];
   for (let idx = 0; idx < UID_SIZE; idx++) {
     const random = Math.floor(Math.random() * RANDOM_SIZE);
     uid.push(RANDOM_TABLE[random]);
   }
-  return uid.join("");
+  // 1일 단위 timestamp 5자리와 24자리 무작위 문자를 합침
+  return toDay + uid.join("");
 };
+
 
 module.exports = { createUid };
