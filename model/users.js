@@ -67,7 +67,6 @@ class User extends Sequelize.Model {
         },
 
         grade: {
-          // 문자로 받을 거니까 TEXT
           type: Sequelize.TINYINT,
         },
 

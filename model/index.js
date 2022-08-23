@@ -9,7 +9,7 @@ const Nft = require("./nfts");
 const Rank = require("./ranks");
 const Report = require("./reports");
 
-console.log(config);
+// console.log(config);
 
 const { database, username, password } = config.dev;
 

@@ -16,14 +16,14 @@ const PORT = 3000;
 // // app.set express에 값을 저장가능 밑에 구문은 view키에 주소값을 넣은 부분
 app.set("views", path.join(__dirname, "view"));
 
-
 app.engine("html", ejs.renderFile);
 
 app.set("view engine", "html");
 
+app.use("/static", express.static(__dirname));
+
 //body 객체 사용
 app.use(express.urlencoded({ extended: false }));
-
 
 // // sequelize 구성 연결 및 테이블 생성 여기가 처음 매핑
 // // sync 함수는 데이터베이스 동기화하고 필요한 테이블을 생성해준다.
@@ -37,14 +37,35 @@ sequelize
     console.log("DB연결 성공");
     initDbMultiple();
   })
-
   .catch((err) => {
     console.log(err);
   });
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  // const userData = await getAllData(User, {});
+  // console.log(userData);
+  // res.render("index");
+  fs.readFile("./index.html", (err, data) => {
+    res.send(data);
+  });
 });
+
+// User.findAll({}).then((datas) => {
+//   datas.map((data) => {
+//     console.log("@@@@", data.dataValues);
+//   });
+// });
+
+async function getAllData(db, query) {
+  return new Promise((resolve, reject) => {
+    db.findAll({ ...query })
+      .then((datas) => {
+        resolve(datas.map((data) => data.dataValues));
+      })
+      .catch((err) => reject(err));
+  });
+}
+
 // app.post("/create", (req, res) => {
 //   // create이 함수를 사용하면 해당 테이블에 컬럼을 추가할 수 이다.
 //   const { name, age, msg } = req.body;
