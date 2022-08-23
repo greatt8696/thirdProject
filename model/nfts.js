@@ -65,6 +65,16 @@ class Nft extends Sequelize.Model {
         history: {
           type: Sequelize.TEXT,
         },
+        
+        report: {
+          type: Sequelize.TEXT,
+          /**
+           * [{"repoter": UID, "target": "NFT_REPORT or USER_REPORT","reason":"비방", time:"timestamp"},
+           *  {"repoter": UID, "reason":"욕설", time:"timestamp"},
+           *  {"repoter": UID, "reason":"뀨", time:"timestamp"},]
+           */
+        },
+        
 
         // 생성한 시간이 필요하다 할때 사용하면 됨 테이블 자체에 timestamps : true 도 쓸수 있음.
         created_at: {

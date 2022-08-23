@@ -7,6 +7,7 @@ const { config } = require("../config/config");
 const User = require("./users");
 const Nft = require("./nfts");
 const Rank = require("./ranks");
+const Report = require("./reports");
 
 console.log(config);
 
@@ -22,15 +23,18 @@ db.sequelize = sequelize;
 db.User = User;
 db.Nft = Nft;
 db.Rank = Rank;
+db.Report = Report;
 
 // 이 구문이 없으면 테이블이 생성되지 않는다.
 User.init(sequelize);
 Nft.init(sequelize);
 Rank.init(sequelize);
+Report.init(sequelize);
 
 // 관계형을 맺어주는 함수 사용
 User.associate(db);
 Nft.associate(db);
 Rank.associate(db);
+Report.associate(db);
 
 module.exports = db;

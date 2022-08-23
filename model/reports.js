@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 // User 클래스에서 시퀄라이즈 모듈객체의 기능을 상속시켜주기위해
 // User 클래스에서 Sequelize.Model 기능을 준다.
 
-class User extends Sequelize.Model {
+class Report extends Sequelize.Model {
   // static init 매서드에서 테이블을 생성해준다.
   // 사용하면 테이블을 생성 및 연결까지(매핑까지) 구성
   static init(sequelize) {
@@ -34,58 +34,19 @@ class User extends Sequelize.Model {
           autoIncrement: true,
         },
 
-        uid: {
-          // 시퀄라이즈 모델 안에 있는 데이터 타입을 사용해야함 꼭!
-          // 그래서 가져온 시퀄라이즈 모듈 안에 있는 STRING 객체를 사용
-          // 여기서 한거는 컬럼의 데이터 타입을 정한 것
-          type: Sequelize.CHAR(29),
-
-          // allowNull 은 값이 무조건 있어야하는지 설정하는것.
-          // null 기본값을 허용한다.
-          allowNull: false,
-
-          unique: true,
-          // 중복되지 않는 키
-          // 주민번호나 전화번호 겹치지 않는 값들 혹여나 안겹치게
-        },
-
-        pwd: {
+        reporter: {
           type: Sequelize.STRING(255),
           allowNull: false,
         },
-        name: {
-          type: Sequelize.STRING(255),
-        },
 
-        email: {
-          type: Sequelize.STRING(50),
-          allowNull: false,
-        },
-        balance: {
-          type: Sequelize.BIGINT.UNSIGNED,
-          allowNull: false,
-        },
-
-        grade: {
-          // 문자로 받을 거니까 TEXT
-          type: Sequelize.TINYINT,
-        },
-
-        gallery: {
+        reason: {
           type: Sequelize.TEXT,
         },
-        state: {
-          type: Sequelize.TINYINT,
-        },
-        report: {
-          type: Sequelize.TEXT,
-          /**
-           * [{"repoter": UID, "reason":"간식을뺏어먹음", time:"timestamp"},
-           *  {"repoter": UID, "reason":"욕설", time:"timestamp"},
-           *  {"repoter": UID, "reason":"뀨", time:"timestamp"},]
-           */
-        },
-        
+        /**
+         * [{"repoter": UID, "target": "NFT_REPORT or USER_REPORT","reason":"비방", time:"timestamp"},
+         *  {"repoter": UID, "reason":"욕설", time:"timestamp"},
+         *  {"repoter": UID, "reason":"뀨", time:"timestamp"},]
+         */
 
         // 생성한 시간이 필요하다 할때 사용하면 됨 테이블 자체에 timestamps : true 도 쓸수 있음.
         created_at: {
@@ -103,8 +64,8 @@ class User extends Sequelize.Model {
 
         underscored: true, // false : createdAt , true : created_at
         // 모델의 이름을 설정할 수 있다.
-        modelName: "User", // 관계형으로 구성할 때 사용한다.
-        tableName: "users", // 데이터베이스의 테이블 이름을 설정한다.
+        modelName: "Report", // 관계형으로 구성할 때 사용한다.
+        tableName: "reports", // 데이터베이스의 테이블 이름을 설정한다.
 
         // 삭제했을때 삭제하는 대신 deletedAt 이 추가가 되고 숨긴다.
         paranoid: false,
@@ -126,11 +87,9 @@ class User extends Sequelize.Model {
     // hasMany 함수를 이용해서 테이블의 관계를 정의해준다.
     // 첫번째 매개변수로 연결할 테이블
     //sourceKey User 테이블 안에 무슨 키를 foreignKey와 연결할지
-    // hasMany (첫번째로 넘겨준 테이블이 foreignKey 연결되고 )
-    // db.User.hasMany(db.Rank, { foreignKey: "user_uid", sourceKey: "uid" });
-    db.User.hasMany(db.Nft, { foreignKey: "owner", sourceKey: "uid" });
-    db.User.hasMany(db.Report, { foreignKey: "user_uid", sourceKey: "uid" });
+    // hasMany (첫번째로 넘겨준 테이블이 foreignKey 연결되고)
+    db.Report.belongsTo(db.User, { foreignKey: "user_uid", targetKey: "uid" });
   }
 }
 
-module.exports = User;
+module.exports = Report;
