@@ -10,9 +10,8 @@ class DbManager {
   setData = (datas) => {
     this.data = datas;
     this.columns = Object.keys(datas[0]);
-    console.log(this.data, this.columns);
+    // console.log(this.data, this.columns);
   };
-
 
   /**
    * @param {Element} tableElement
@@ -20,28 +19,38 @@ class DbManager {
    * @param {Boolean} viewRowNum
    * @return {Element}
    */
-  
-  createTableEl = (tableElement, columnList, viewRowNum = false) => {
+
+  createTableEl = (
+    tableElement,
+    columnList = [],
+    viewRowNum = false
+  ) => {
     const columns = [...this.columns];
     const datas = [...this.data];
-
     const thead = document.createElement("thead");
     const tbody = document.createElement("tbody");
     const trs = [];
     const ths = [];
 
+    const isInclude = (val) => {
+
+      if (columnList.length === 0) return true;
+
+      return columnList.indexOf(val) < 0 ? false : true;
+    };
     //
     columns.map((column) => {
-      const th = document.createElement("th");
-      th.setAttribute("scope", "col");
-      th.innerHTML = column;
-      thead.appendChild(th);
-      ths.push(th);
+      if (isInclude(column)) {
+        const th = document.createElement("th");
+        th.setAttribute("scope", "col");
+        th.innerHTML = column;
+        thead.appendChild(th);
+        ths.push(th);
+      }
     });
 
     datas.map((rowData, row) => {
       const tr = document.createElement("tr");
-
       if (viewRowNum) {
         const th = document.createElement("th");
         th.setAttribute("scope", row);
@@ -49,14 +58,15 @@ class DbManager {
         tr.appendChild(th);
       }
 
+      // {}
       for (const key in rowData) {
-        const val = rowData[key];
-        const td = document.createElement("td");
-        td.innerHTML = val;
-        tr.appendChild(td);
+        if (isInclude(key)) {
+          const val = rowData[key];
+          const td = document.createElement("td");
+          td.innerHTML = val;
+          tr.appendChild(td);
+        }
       }
-      // const td = document.createElement("td");
-      // tbody.appendChild(th);
 
       tbody.appendChild(tr);
     });

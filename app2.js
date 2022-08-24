@@ -173,9 +173,15 @@ async function getAllData(db, query) {
 //   Post.update({ msg }, { where: { id, msg: text } });
 // });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(PORT, "번 포트 열림");
 });
+//socket.io 생성 및 실행
+// const io = socketio(server);
+
+// io.sockets.on("connection", (socket) => {
+
+// });
 
 function createOne() {
   User.create({
