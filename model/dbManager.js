@@ -1,13 +1,28 @@
 class DbManager {
   data = [];
   column = [];
+
+  /**
+   * @param {Array} datas
+   * @return {null}
+   */
+
   setData = (datas) => {
     this.data = datas;
     this.columns = Object.keys(datas[0]);
-    // console.log(this.data, this.columns);
+    console.log(this.data, this.columns);
   };
-  createTable = (tableElement, columnList, viewRowNum = false) => {
-    const columns = [...this.column];
+
+
+  /**
+   * @param {Element} tableElement
+   * @param {Array} columnList
+   * @param {Boolean} viewRowNum
+   * @return {Element}
+   */
+  
+  createTableEl = (tableElement, columnList, viewRowNum = false) => {
+    const columns = [...this.columns];
     const datas = [...this.data];
 
     const thead = document.createElement("thead");
@@ -18,8 +33,8 @@ class DbManager {
     //
     columns.map((column) => {
       const th = document.createElement("th");
-      th.setAttribute("scope", col);
-      th.innerHTML(column);
+      th.setAttribute("scope", "col");
+      th.innerHTML = column;
       thead.appendChild(th);
       ths.push(th);
     });
@@ -42,6 +57,7 @@ class DbManager {
       }
       // const td = document.createElement("td");
       // tbody.appendChild(th);
+
       tbody.appendChild(tr);
     });
     tableElement.appendChild(thead);

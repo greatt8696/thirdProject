@@ -32,10 +32,10 @@ app.use(express.urlencoded({ extended: false }));
 // // CREATE TABLE 구문이 여기서 실행됨.
 // // force 강제실행 초기화 시킬것인지(테이블 초기화 할것인지)
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log("DB연결 성공");
-    initDbMultiple();
+    // initDbMultiple();
   })
   .catch((err) => {
     console.log(err);
@@ -45,9 +45,34 @@ app.get("/", async (req, res) => {
   // const userData = await getAllData(User, {});
   // console.log(userData);
   // res.render("index");
-  fs.readFile("./index.html", (err, data) => {
-    res.send(data);
+  fs.readFile("view/index", (err, data) => {
+    res.render("index");
   });
+});
+
+app.get("/getDatas", async (req, res) => {
+  const datas = await getAllData(User);
+  res.send(datas);
+  if (req.body.secret === "뀨") {
+    const datas = await getAllData();
+    console.log(datas);
+  }
+});
+app.get("/getDatas2", async (req, res) => {
+  const datas = await getAllData(Rank);
+  res.send(datas);
+  if (req.body.secret === "뀨") {
+    const datas = await getAllData();
+    console.log(datas);
+  }
+});
+app.get("/getDatas3", async (req, res) => {
+  const datas = await getAllData(Nft);
+  res.send(datas);
+  if (req.body.secret === "뀨") {
+    const datas = await getAllData();
+    console.log(datas);
+  }
 });
 
 // User.findAll({}).then((datas) => {
