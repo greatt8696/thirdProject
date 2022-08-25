@@ -9,40 +9,37 @@ class SocketServer {
       chat: this.io.of("/chat"),
     };
     this.init();
-    this.createAuction();
-    this.createEvent();
-    this.createChat();
+    this.initSocket("auction");
+    this.initSocket("chat");
+    this.initSocket("event");
   }
   init() {
     this.io.on("connection", (socket) => {
       console.log("Socket 작동중");
     });
   }
-  createAuction(room) {
-    this.nsp["auction"].on("connection", (socket) => {
-      console.log(`${room} : ${"uid"} 옥션입장뀨`);
-      socket.on("join_auction", (room, uid) => {
+
+  initSocket(nspName) {
+    this.nsp[`${nspName}`].on("connection", (socket) => {
+      console.log(`${nspName} connect 성공`);
+
+      socket.on(`join_${nspName}`, (dataObj) => {
+        const { room, uid } = dataObj;
         socket.join(room);
-        socket.to(room).emit("join_auction", room, uid);
-        console.log(`${room} : ${uid} 옥션입장뀨`);
+        socket.to(room).emit(`join_${nspName}`, room, uid);
+        console.log(`${nspName} connect 입장`);
       });
-      socket.on("leave_auction", (room, uid) => {
+
+      socket.on(`leave_${nspName}`, (dataObj) => {
+        const { room, uid } = dataObj;
         socket.leave(room);
-        io.to(room).emit("leave_auction", room, uid);
-        console.log(`${room} 옥션나감뀨`);
+        io.to(room).emit(`leave_${nspName}`, room, uid);
+        console.log(`${nspName} connect 퇴장`);
       });
     });
   }
-  createEvent(room) {
-    this.nsp["event"].on("connection", () => {
-      console.log(`${room} 이벤트쀼`);
-    });
-  }
-  createChat(room) {
-    this.nsp["chat"].on("connection", () => {
-      console.log(`${room} 채팅쀼`);
-    });
-  }
+  // emitObj = {}
+  // setEmit(socket emitObj)
 }
 
 module.exports = SocketServer;
