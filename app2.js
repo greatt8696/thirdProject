@@ -1,4 +1,4 @@
-const SocketManager = require("./socket/socketManager");
+const SocketServer = require("./socket/server");
 const express = require("express");
 const ejs = require("ejs");
 const path = require("path");
@@ -23,7 +23,7 @@ const server = app.listen(PORT, () => {
 
 
 //socket.io 생성 및 실행
-const socketManager = new SocketManager(server)
+const socketServer = new SocketServer(server)
 
 
 
@@ -49,7 +49,7 @@ app.use("/static", express.static(__dirname));
 app.use(express.urlencoded({ extended: false }));
 
 sequelize
-  .sync({ force: false })
+  .sync({ force:false })
   .then(() => {
     console.log("DB연결 성공");
     // initDbMultiple();
@@ -241,7 +241,7 @@ function initDbMultiple() {
     {
       uid: createUid(),
       pwd: "쀼쀼쀼쀼쀼",
-      name: "name",
+      name: "유저_1 뀨뀨",
       email: "뀨뀨뀨뀨뀨뀨뀨@naver.com",
       balance: 987654321098765,
       grade: 0,
@@ -255,7 +255,7 @@ function initDbMultiple() {
     {
       uid: createUid(),
       pwd: "쀼쀼쀼쀼쀼",
-      name: "name",
+      name: "유저_2 쀼쀼",
       email: "뀨뀨뀨뀨뀨뀨뀨@naver.com",
       balance: 987654321098765,
       grade: 0,

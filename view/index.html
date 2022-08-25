@@ -100,15 +100,26 @@
     ></table>
   </body>
   <script>
-    const auction = io('/auction');
-    auction.on("connect", () => {
-      console.log("옥션뀨");
-    });
-    const event = io('/event');
-    event.on("connect", () => {
-      console.log("이벤트뀨");
-    });
+    // const auction = io('/auction');
+    // auction.on("connect", (socket) => {
+    //   auction.emit("join_auction","옥션룸", "uid 나나나")
+    // });
+    // auction.on("joinAuction", () => {
+    //   console.log("엣헴");
+    // })
+    
+    // const event = io('/event');
+    // event.on("connect", (socket) => {
+    //   console.log("이벤트뀨");
+    // });
+
+    // const chat = io('/chat');
+    // chat.on("connect", (socket) => {
+    //   console.log("채팅뀨");
+    // });
+
   </script>
   <script src="static/model/dbManager.js"></script>
+  <script src="static/socket/client.js"></script>
   <script src="static/view/index.js"></script>
 </html>

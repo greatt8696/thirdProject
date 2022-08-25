@@ -79,7 +79,9 @@ class User extends Sequelize.Model {
            *  {"repoter": UID, "reason":"뀨", time:"timestamp"},]
            */
         },
-        
+        img_url: {
+          type: Sequelize.STRING(255),
+        },
 
         // 생성한 시간이 필요하다 할때 사용하면 됨 테이블 자체에 timestamps : true 도 쓸수 있음.
         // created_at: {
