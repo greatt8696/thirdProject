@@ -1,3 +1,4 @@
+const socketio = require("socket.io");
 const express = require("express");
 const ejs = require("ejs");
 const path = require("path");
@@ -9,11 +10,36 @@ const { createUid, createNftId } = require("./util/createRandom");
 const app = express();
 
 const PORT = 3000;
+const SOCKET_PORT = 3030;
 
 // // join함수는 매개변수를 받아 주소처럼 합쳐줌
 // // path.join('a','b') => "a/b"
 // // views 폴더까지의 경로가 기본값 렌더링할 파일을 모아둔 폴더
 // // app.set express에 값을 저장가능 밑에 구문은 view키에 주소값을 넣은 부분
+const server = app.listen(PORT, () => {
+  console.log(PORT, "포트 연결");
+});
+
+//socket.io 생성 및 실행
+const io = socketio(server);
+
+io.on("connection", (socket) => {
+  console.log("@@@@@@@@@@@@@@@@@@");
+});
+
+
+
+
+// io.sockets(server).on("connection", (socket) => {
+// });
+
+// // sequelize 구성 연결 및 테이블 생성 여기가 처음 매핑
+// // sync 함수는 데이터베이스 동기화하고 필요한 테이블을 생성해준다.
+// // 필요한 테이블들이 생기고 매핑된다.
+// // 테이블 내용이 다르면 먼저 오류를 뱉어냄s
+// // CREATE TABLE 구문이 여기서 실행됨.
+// // force 강제실행 초기화 시킬것인지(테이블 초기화 할것인지)
+
 app.set("views", path.join(__dirname, "view"));
 
 app.engine("html", ejs.renderFile);
@@ -25,12 +51,6 @@ app.use("/static", express.static(__dirname));
 //body 객체 사용
 app.use(express.urlencoded({ extended: false }));
 
-// // sequelize 구성 연결 및 테이블 생성 여기가 처음 매핑
-// // sync 함수는 데이터베이스 동기화하고 필요한 테이블을 생성해준다.
-// // 필요한 테이블들이 생기고 매핑된다.
-// // 테이블 내용이 다르면 먼저 오류를 뱉어냄s
-// // CREATE TABLE 구문이 여기서 실행됨.
-// // force 강제실행 초기화 시킬것인지(테이블 초기화 할것인지)
 sequelize
   .sync({ force: false })
   .then(() => {
@@ -173,9 +193,6 @@ async function getAllData(db, query) {
 //   Post.update({ msg }, { where: { id, msg: text } });
 // });
 
-const server = app.listen(PORT, () => {
-  console.log(PORT, "번 포트 열림");
-});
 //socket.io 생성 및 실행
 // const io = socketio(server);
 

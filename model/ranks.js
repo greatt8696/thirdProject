@@ -48,11 +48,11 @@ class Rank extends Sequelize.Model {
         },
 
         // 생성한 시간이 필요하다 할때 사용하면 됨 테이블 자체에 timestamps : true 도 쓸수 있음.
-        created_at: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.NOW,
-        },
+        // created_at: {
+        //   type: Sequelize.DATE,
+        //   allowNull: false,
+        //   defaultValue: Sequelize.NOW,
+        // },
       },
       //created_at 만 생기는게 아니라 updated_at 도 생겨서 우리가 수정했을때 시간도 같이 기록해줌
       {
@@ -61,7 +61,7 @@ class Rank extends Sequelize.Model {
         // underscored 시퀄라이즈는 기본적으로 userData 카멜표기법인데
         // 스테이크 표기법으로 바꿔주는 옵션 user_data
 
-        underscored: true, // false : createdAt , true : created_at
+        underscored: false, // false : createdAt , true : created_at
         // 모델의 이름을 설정할 수 있다.
         modelName: "Rank", // 관계형으로 구성할 때 사용한다.
         tableName: "ranks", // 데이터베이스의 테이블 이름을 설정한다.

@@ -49,11 +49,11 @@ class Report extends Sequelize.Model {
          */
 
         // 생성한 시간이 필요하다 할때 사용하면 됨 테이블 자체에 timestamps : true 도 쓸수 있음.
-        created_at: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.NOW,
-        },
+        // created_at: {
+        //   type: Sequelize.DATE,
+        //   allowNull: false,
+        //   defaultValue: Sequelize.NOW,
+        // },
       },
       //created_at 만 생기는게 아니라 updated_at 도 생겨서 우리가 수정했을때 시간도 같이 기록해줌
       {
