@@ -1,4 +1,4 @@
-const socketio = require("socket.io");
+const SocketManager = require("./socket/socketManager");
 const express = require("express");
 const ejs = require("ejs");
 const path = require("path");
@@ -20,13 +20,10 @@ const server = app.listen(PORT, () => {
   console.log(PORT, "포트 연결");
 });
 
+
+
 //socket.io 생성 및 실행
-const io = socketio(server);
-
-io.on("connection", (socket) => {
-  console.log("@@@@@@@@@@@@@@@@@@");
-});
-
+const socketManager = new SocketManager(server)
 
 
 

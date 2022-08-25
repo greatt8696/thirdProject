@@ -16,7 +16,7 @@
       integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
       crossorigin="anonymous"
     ></script>
-    
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   </head>
@@ -90,13 +90,25 @@
         </tr>
       </tbody> -->
     </table>
-    <table id="table2" class="table table-dark table-striped table-hover my-2">
-
-    </table>
-    <table id="table3" class="table table-dark table-striped table-hover my-2">
-
-    </table>
+    <table
+      id="table2"
+      class="table table-dark table-striped table-hover my-2"
+    ></table>
+    <table
+      id="table3"
+      class="table table-dark table-striped table-hover my-2"
+    ></table>
   </body>
+  <script>
+    const auction = io('/auction');
+    auction.on("connect", () => {
+      console.log("옥션뀨");
+    });
+    const event = io('/event');
+    event.on("connect", () => {
+      console.log("이벤트뀨");
+    });
+  </script>
   <script src="static/model/dbManager.js"></script>
   <script src="static/view/index.js"></script>
 </html>

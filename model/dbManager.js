@@ -66,7 +66,7 @@ class DbManager {
     });
     tableElement.appendChild(thead);
     tableElement.appendChild(tbody);
-    return { trs: trs, tds: tds };
+    return { trs: trs };
   };
 }
 
