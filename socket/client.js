@@ -59,7 +59,6 @@ class ClientManager {
   // dataObj = {emit, ...input}
   sendEmit = (nsp, dataObj) => {
     const { emit, ...inputData } = dataObj;
-    console.log("@@@@@@@", emit);
     nsp.emit(emit, inputData);
   };
 
