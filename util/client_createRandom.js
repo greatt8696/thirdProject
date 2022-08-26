@@ -94,4 +94,4 @@ const createNftId = () => {
   return uid.join("") + toDay;
 };
 
-module.exports = { createUid, createNftId };
+// module.exports = { createUid, createNftId };
